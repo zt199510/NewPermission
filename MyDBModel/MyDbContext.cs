@@ -17,6 +17,7 @@ namespace CardPlatform.MyDBModel
 
         public DbSet<UserInfo> UserInfos { get; set; }
 
+        public DbSet<UserRefreshToken>  UserRefreshToken { get; set; }
         public DbSet<PermissionModels>  PermissionModels { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {

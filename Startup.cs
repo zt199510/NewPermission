@@ -65,10 +65,8 @@ namespace CardPlatform
              });
 
             services.AddControllers();
-
             services.AddAuthorization(options=> {
                 options.AddPolicy("admin",option=>option.RequireRole("admin"));
-            
             });
             var Issurer = "JWTBearer.Auth";  //发行人
             var Audience = "api.auth";       //受众人
@@ -77,8 +75,6 @@ namespace CardPlatform
             services.AddAuthentication(options=> {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-               
-              
             }).AddJwtBearer(options=>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -97,7 +93,7 @@ namespace CardPlatform
                 {
                     OnAuthenticationFailed = context =>
                     {
-                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))//token 如果过期头部添加字段
                         {
                             context.Response.Headers.Add("Token-Expired", "true");
                         }

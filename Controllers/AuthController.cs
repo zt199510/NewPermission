@@ -5,12 +5,18 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using CardPlatform.Common;
 using CardPlatform.Models;
 using CardPlatform.MyDBModel;
 using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CardPlatform.Controllers
 {
@@ -19,52 +25,51 @@ namespace CardPlatform.Controllers
     public class AuthController : ControllerBase
     {
         private readonly MyDbContext _UserDb;
+        private readonly CommonEven _CommonEven;
 
-        public AuthController(MyDbContext UserDb)
+        public AuthController(MyDbContext UserDb, CommonEven CommonEven)
         {
             _UserDb = UserDb;
+            _CommonEven = CommonEven;
         }
-
-
+        /// <summary>
+        /// 登入
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult Login(UserLogDTO user)
+        public async Task<IActionResult> Login(UserLogDTO user)
         {
-            var loginModel = _UserDb.UserInfos.FirstOrDefault(m => m.UserName.Equals(user.UserName));
+            var loginModel = _UserDb.UserInfos.Include(d => d.UserRefreshTokens).FirstOrDefault(m => m.UserName.Equals(user.UserName));
             if (loginModel != null)
             {
                 try
                 {
-
-                    //定义发行人issuer
-                    string iss = "JWTBearer.Auth";
-                    //定义受众人audience
-                    string aud = "api.auth";
                     IEnumerable<Claim> claims = new Claim[]
-                    {
+                      {
                          new Claim(JwtClaimTypes.Email,loginModel.Email),
                          new Claim(JwtClaimTypes.Name,loginModel.UserName),
                          new Claim(JwtClaimTypes.Role,"admin"),
-                    };
-                    var nbf = DateTime.UtcNow;
-
-                    var Exp = DateTime.UtcNow.AddSeconds(1000);
-
-                    string sign = "q2xiARx$4x3TKqBJ"; //SecurityKey 的长度必须 大于等于 16个字符
-                    var secret = Encoding.UTF8.GetBytes(sign);
-                    var key = new SymmetricSecurityKey(secret);
-                    var signcreds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                    var jwt = new JwtSecurityToken(issuer: iss, audience: aud, claims: claims, notBefore: nbf, expires: Exp, signingCredentials: signcreds);
-                    var JwtHander = new JwtSecurityTokenHandler();
-                    var token = JwtHander.WriteToken(jwt);
-
-                    return Ok(new
-                    {
-                        access_token = token,
-                        token_type = "Bearer",
-                        message = "登入成功",
-                        Error = false
-                    });
-
+                      };
+                    //生成允许访问的JWT
+                    var token = _CommonEven.GenerateAccessToken(claims);
+                    //生成允许刷新JWT的Token
+                    var refreshToken = _CommonEven.GenerateRefreshToken();
+                    //更新登入时间
+                    loginModel.LasLoginTime = DateTime.Now.ToString();
+                  
+                    //存入数据库
+                    loginModel.CreateRefreshToken(refreshToken, user.UserName);
+                    int resultsub = await _UserDb.SaveChangesAsync();
+                    if (resultsub > 0)
+                        return Ok(new
+                        {
+                            RefreshToken = refreshToken,
+                            access_token = token,
+                            token_type = "Bearer",
+                            message = "登入成功",
+                            Error = false
+                        }); 
                 }
                 catch (Exception)
                 {
@@ -74,13 +79,19 @@ namespace CardPlatform.Controllers
             }
             return Ok(new
             {
-                message = "账号秘密不正确",
+                message = "账号密码不正确",
                 Error = true
             }); ;
 
         }
+
+        /// <summary>
+        /// 注册
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult Registered(RegistModel model)
+        public async Task<IActionResult> Registered(RegistModel model)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +104,7 @@ namespace CardPlatform.Controllers
                     RegistTime = DateTime.Now.ToString(),
 
                 };
-                var Isuse = _UserDb.UserInfos.FirstOrDefault(w=>w.UserName== model.Name);
+                var Isuse = await _UserDb.UserInfos.FirstOrDefaultAsync(w => w.UserName == model.Name);
 
                 if (Isuse != null)
                     return Ok(new
@@ -104,7 +115,7 @@ namespace CardPlatform.Controllers
 
                 var use = _UserDb.Add<UserInfo>(info);
 
-                int sumok = _UserDb.SaveChanges();
+                int sumok = await _UserDb.SaveChangesAsync();
                 if (sumok > 0)
                 {
                     return Ok(new
@@ -122,5 +133,60 @@ namespace CardPlatform.Controllers
 
 
         }
+        /// <summary>
+        /// 利用刷新令牌(也叫长Token)刷新访问Token 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] Request request)
+        {
+            //将访问令牌解密 并且返回Claims实体
+            var principal = _CommonEven.GetPrincipalFromAccessToken(request.AccessToken);
+
+            if (principal is null)
+                return Ok(false);
+
+            var id = principal.Claims.First(c => c.Type == JwtClaimTypes.Name)?.Value;
+            if (string.IsNullOrEmpty(id))
+                return Ok(false);
+
+            var user = await _UserDb.UserInfos.Include(d => d.UserRefreshTokens)
+              .FirstOrDefaultAsync(d => d.UserName == id);
+
+            if (user is null || user.UserRefreshTokens?.Count() <= 0)
+                return Ok(false);
+
+            if (!user.IsValidRefreshToken(request.RefreshToken))
+                return Ok(false);
+          
+            _UserDb.UserRefreshToken.Remove(user.UserRefreshTokens.First(d=>d.Token== request.RefreshToken));
+
+           var refreshToken = _CommonEven.GenerateRefreshToken();
+  
+            user.CreateRefreshToken(refreshToken, user.UserName);
+
+            try
+            {
+                await _UserDb.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            IEnumerable<Claim> claims = new Claim[]
+                   {
+                         new Claim(JwtClaimTypes.Email,user.Email),
+                         new Claim(JwtClaimTypes.Name,user.UserName),
+                         new Claim(JwtClaimTypes.Role,"admin"),
+                   };
+            return Ok(new
+            {
+                AccessToken = _CommonEven.GenerateAccessToken(claims),
+                RefreshToken = refreshToken
+            });
+        }
+
     }
 }
