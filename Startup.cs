@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CardPlatform.Common;
 using CardPlatform.MyDBModel;
-
+using CardPlatform.ServiceEnd;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,7 +30,7 @@ namespace CardPlatform
         {
             Configuration = configuration;
         }
-
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";//名字随便起
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -64,7 +64,11 @@ namespace CardPlatform
                  config.UseSqlite(connectionString);
              });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options=> {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            }); ;
             services.AddAuthorization(options=> {
                 options.AddPolicy("admin",option=>option.RequireRole("admin"));
             });
@@ -95,15 +99,20 @@ namespace CardPlatform
                     {
                         if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))//token 如果过期头部添加字段
                         {
-                            context.Response.Headers.Add("Token-Expired", "true");
+                            context.Response.Headers.Add("TokenExpired", "true");
                         }
                         return Task.CompletedTask;
                     }
                 };
             });
-
-
-            services.AddScoped<CommonEven>();
+            ///允许所有跨域访问
+            services.AddCors(options=> {
+                options.AddPolicy(MyAllowSpecificOrigins,builder=> {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+            services.AddScoped<CommonEven>().
+                AddScoped<NavMenuService>(); 
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -112,20 +121,22 @@ namespace CardPlatform
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseHttpsRedirection();
-
+            
             app.UseSwagger();
             app.UseSwaggerUI(c=> {
                 c.SwaggerEndpoint($"/swagger/V1/swagger.json", $"支付平台 V1");
                 c.RoutePrefix = string.Empty;
             });
+          
             app.UseRouting();
 
             app.UseAuthentication();
             //2.再开启授权
             app.UseAuthorization();
-
+            //使用跨域
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

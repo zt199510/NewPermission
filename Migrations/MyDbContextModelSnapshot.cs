@@ -16,6 +16,42 @@ namespace CardPlatform.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.8");
 
+            modelBuilder.Entity("CardPlatform.Models.Menu", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("IndexCode")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MenuType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("ParentId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Menus");
+                });
+
             modelBuilder.Entity("CardPlatform.Models.PermissionModels", b =>
                 {
                     b.Property<int>("Id")
@@ -87,7 +123,7 @@ namespace CardPlatform.Migrations
 
                     b.HasIndex("UserInfoUserName");
 
-                    b.ToTable("UserRefreshTokens");
+                    b.ToTable("UserRefreshToken");
                 });
 
             modelBuilder.Entity("CardPlatform.Models.PermissionModels", b =>

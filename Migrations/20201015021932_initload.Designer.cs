@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CardPlatform.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201012003617_AddTokenRefresTokens")]
-    partial class AddTokenRefresTokens
+    [Migration("20201015021932_initload")]
+    partial class initload
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,13 +18,46 @@ namespace CardPlatform.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.8");
 
+            modelBuilder.Entity("CardPlatform.Models.Menu", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("IndexCode")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MenuType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("ParentId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Menus");
+                });
+
             modelBuilder.Entity("CardPlatform.Models.PermissionModels", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("PermissionModelsId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Role")
@@ -37,8 +70,6 @@ namespace CardPlatform.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PermissionModelsId");
 
                     b.ToTable("PermissionModels");
                 });
@@ -90,13 +121,6 @@ namespace CardPlatform.Migrations
                     b.HasIndex("UserInfoUserName");
 
                     b.ToTable("UserRefreshToken");
-                });
-
-            modelBuilder.Entity("CardPlatform.Models.PermissionModels", b =>
-                {
-                    b.HasOne("CardPlatform.Models.PermissionModels", null)
-                        .WithMany("ChlinPermissionModels")
-                        .HasForeignKey("PermissionModelsId");
                 });
 
             modelBuilder.Entity("CardPlatform.Models.UserRefreshToken", b =>

@@ -10,10 +10,7 @@ namespace CardPlatform.Models
 {
     public class PermissionModels
     {
-        public PermissionModels()
-        {
-            ChlinPermissionModels = new List<PermissionModels>();
-        }
+       
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -22,6 +19,7 @@ namespace CardPlatform.Models
         public string URLName { get; set; }
 
         public string Role { get; set; }
-        public List<PermissionModels>  ChlinPermissionModels { get; set; }
+
+
     }
 }

@@ -9,14 +9,50 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CardPlatform.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20201010075759_initAddPermissionmodels")]
-    partial class initAddPermissionmodels
+    [Migration("20201015022045_initload1")]
+    partial class initload1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.8");
+
+            modelBuilder.Entity("CardPlatform.Models.Menu", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("IndexCode")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MenuType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("ParentId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Menus");
+                });
 
             modelBuilder.Entity("CardPlatform.Models.PermissionModels", b =>
                 {
@@ -68,11 +104,42 @@ namespace CardPlatform.Migrations
                     b.ToTable("UserInfos");
                 });
 
+            modelBuilder.Entity("CardPlatform.Models.UserRefreshToken", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserInfoUserName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserInfoUserName");
+
+                    b.ToTable("UserRefreshToken");
+                });
+
             modelBuilder.Entity("CardPlatform.Models.PermissionModels", b =>
                 {
                     b.HasOne("CardPlatform.Models.PermissionModels", null)
                         .WithMany("ChlinPermissionModels")
                         .HasForeignKey("PermissionModelsId");
+                });
+
+            modelBuilder.Entity("CardPlatform.Models.UserRefreshToken", b =>
+                {
+                    b.HasOne("CardPlatform.Models.UserInfo", null)
+                        .WithMany("UserRefreshTokens")
+                        .HasForeignKey("UserInfoUserName");
                 });
 #pragma warning restore 612, 618
         }
