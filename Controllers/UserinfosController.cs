@@ -76,8 +76,6 @@ namespace CardPlatform.Controllers
                 menus = menus.Where(s => s.MenuType == (MenuTypes)query.QMenuType);
             }
                
-          
-            
             return Ok(new  { Menus = await menus.ToListAsync(), Query = query });
           
         }
