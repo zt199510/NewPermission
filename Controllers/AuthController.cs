@@ -67,6 +67,7 @@ namespace CardPlatform.Controllers
                             RefreshToken = refreshToken,
                             access_token = token,
                             token_type = "Bearer",
+                            resetTime= 3000,
                             message = "登入成功",
                             Error = false
                         }); 
@@ -184,7 +185,8 @@ namespace CardPlatform.Controllers
             return Ok(new
             {
                 AccessToken = _CommonEven.GenerateAccessToken(claims),
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                resetTime=3000
             });
         }
 
