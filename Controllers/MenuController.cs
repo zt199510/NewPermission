@@ -72,9 +72,6 @@ namespace CardPlatform.Controllers
             }
             Result.IsSuccess();
             Result.data = menu;
-
-
-
             return Ok(Result);
 
 
@@ -113,6 +110,27 @@ namespace CardPlatform.Controllers
 
         }
 
+        [HttpPost]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var Result = new ServiceResultList<Menu>();
+            Result.IsFailed("没有该数据信息");
+            if (id == null)
+            {
+                return Ok(Result);
+            }
+            var Isuse = await _UserDb.Menus.FirstOrDefaultAsync(w => w.Id == id);
+            if (Isuse != null)
+            {
+                 _UserDb.Menus.Remove(Isuse);
+               int sum= await _UserDb.SaveChangesAsync();
+                if (sum > 0)
+                    Result.IsSuccess("删除成功");
+            }
+            return Ok(Result);
+                
+        }
     }
 
 }
