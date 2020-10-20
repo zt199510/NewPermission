@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CardPlatform.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,25 +8,36 @@ using System.Threading.Tasks;
 
 namespace CardPlatform.Models
 {
-    public class UserInfo
+    public class UserInfo:Entity
     {
-
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        //public string id { get; set; }
-        [Key]
+       
         public string UserName { get; set; }
         public string Password { get; set; }
-
         public string Email { get; set; }
-
         public string RegistTime { get; set; }
-
         public string LasLoginTime { get; set; }
-
         public bool Status { get; set; }
+        /// <summary>
+        /// 部门ID
+        /// </summary>
+        public Guid DeptmentId { get; set; }
+
+        /// <summary>
+        /// 是否已删除
+        /// </summary>
+        public int IsDeleted { get; set; }
+
+        /// <summary>
+        /// 所属部门实体
+        /// </summary>
+        public virtual Department.Department Department { get; set; }
+
+        /// <summary>
+        /// 角色集合
+        /// </summary>
+        public virtual ICollection<Role.Role> Roles { get; set; }
 
         private readonly List<UserRefreshToken> _userRefreshTokens = new List<UserRefreshToken>();
-
         public IEnumerable<UserRefreshToken> UserRefreshTokens => _userRefreshTokens;
 
 
@@ -34,6 +46,7 @@ namespace CardPlatform.Models
         /// </summary>
         /// <param name="refreshToken"></param>
         /// <returns></returns>
+
         public bool IsValidRefreshToken(string refreshToken)
         {
             return _userRefreshTokens.Any(d => d.Token.Equals(refreshToken) && d.Active);
@@ -45,6 +58,7 @@ namespace CardPlatform.Models
         /// <param name="token"></param>
         /// <param name="userId"></param>
         /// <param name="minutes"></param>
+
         public void CreateRefreshToken(string token, string userId, double minutes = 1)
         {
             _userRefreshTokens.Add(new UserRefreshToken() { Token = token, UserId = userId, Expires = DateTime.Now.AddDays(minutes) });

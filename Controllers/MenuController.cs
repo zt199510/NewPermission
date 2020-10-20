@@ -32,11 +32,12 @@ namespace CardPlatform.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> Create([Bind("Id,Name,ParentId,IndexCode,Url,MenuType,Icon,Remarks")] Menu menu)
+        public async Task<IActionResult> Create([Bind("Code,Name,ParentId,IndexCode,Url,MenuType,Icon,Remarks")] Menu menu)
         {
+            menu.ParentId= menu.ParentId == null ? Guid.Empty : menu.ParentId;
             var Result = new ServiceResult();
             Result.IsFailed("账号已经存在");
-            var Isuse = await _UserDb.Menus.FirstOrDefaultAsync(w => w.Id == menu.Id);
+            var Isuse = await _UserDb.Menus.FirstOrDefaultAsync(w => w.Code == menu.Code);
             if (Isuse == null)
             {
                 _UserDb.Add(menu);
@@ -55,7 +56,7 @@ namespace CardPlatform.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("Details")]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid id)
         {
             var Result = new ServiceResultList<Menu>();
             Result.IsFailed("查询失败");
@@ -86,17 +87,18 @@ namespace CardPlatform.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("Edit")]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,ParentId,IndexCode,Url,MenuType,Icon,Remarks")] Menu menu)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Code,Name,ParentId,IndexCode,Url,MenuType,Icon,Remarks")] Menu menu)
         {
             var Result = new ServiceResult();
             Result.IsFailed("失败");
 
-            if (id != menu.Id)
+            if (id == Guid.Empty||id==null)
             {
                 return Ok(Result);
             }
             try
             {
+                menu.Id = id;
                 _UserDb.Update(menu);
                 await _UserDb.SaveChangesAsync();
                 Result.IsSuccess("成功");
@@ -104,7 +106,7 @@ namespace CardPlatform.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return Ok(Result);
+                return Ok(Result); 
             }
 
 
@@ -112,7 +114,7 @@ namespace CardPlatform.Controllers
 
         [HttpPost]
         [Route("Delete")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var Result = new ServiceResultList<Menu>();
             Result.IsFailed("没有该数据信息");

@@ -40,7 +40,7 @@ namespace CardPlatform.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserLogDTO user)
         {
-            var loginModel = _UserDb.UserInfos.Include(d => d.UserRefreshTokens).FirstOrDefault(m => m.UserName.Equals(user.UserName));
+            var loginModel = _UserDb.UserInfos.Include(d => d.UserRefreshTokens).FirstOrDefault(m => m.UserName.Equals(user.UserName)&&m.Password.Equals(user.Password));
             if (loginModel != null)
             {
                 try
@@ -103,6 +103,8 @@ namespace CardPlatform.Controllers
                     UserName = model.Name,
                     Password = model.Password,
                     RegistTime = DateTime.Now.ToString(),
+                    Roles = null,
+                   Department = null
 
                 };
                 var Isuse = await _UserDb.UserInfos.FirstOrDefaultAsync(w => w.UserName == model.Name);

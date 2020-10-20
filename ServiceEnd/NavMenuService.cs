@@ -39,7 +39,7 @@ namespace CardPlatform.ServiceEnd
             NavMenus = new List<NavMenu>();
 
             var rootMenus = _UserDb.Menus
-                .Where(s => string.IsNullOrEmpty(s.ParentId))
+                .Where(s => Guid.Empty==s.ParentId)
                 .AsNoTracking()
                 .OrderBy(s => s.IndexCode)
                 .ToList();

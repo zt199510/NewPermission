@@ -65,11 +65,11 @@ namespace CardPlatform.Controllers
             }
             if (!string.IsNullOrEmpty(query.QId))
             {
-                menus = menus.Where(s => s.Id.Contains(query.QId.Trim()));
+                menus = menus.Where(s => s.Code==query.QId);
             }
-            if (!string.IsNullOrEmpty(query.QParentId))
+            if (query.QParentId!=null)
             {
-                menus = menus.Where(s => s.ParentId == query.QParentId.Trim());
+                menus = menus.Where(s => s.ParentId == query.QParentId);
             }
             if (query.QMenuType!=-1)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CardPlatform.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,14 +11,14 @@ namespace CardPlatform.Models
     /// <summary>
     /// 菜单
     /// </summary>
-    public class Menu
+    public class Menu:Entity
     {
         /// <summary>
         /// 主键ID
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required(ErrorMessage = "请输入菜单编号")]
-        public string Id { get; set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// 菜单名称
@@ -29,8 +30,8 @@ namespace CardPlatform.Models
         /// <summary>
         /// 父级ID
         /// </summary>
-        [DisplayFormat(NullDisplayText = "无")]
-        public string ParentId { get; set; }
+
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// 菜单组内排序
