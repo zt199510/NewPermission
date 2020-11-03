@@ -1,9 +1,10 @@
-﻿using CardPlatform.Models.Enums;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ZTDomain;
 
 namespace CardPlatform.Models.MenuMod
 {
@@ -11,11 +12,11 @@ namespace CardPlatform.Models.MenuMod
     /// 导航菜单项
     /// </summary>
    
-    public class NavMenu:Entity
-    {
+    public class NavMenu { 
+    
    
         public string Name { get; set; }
-        public MenuTypes MenuType { get; set; }
+        public int MenuType { get; set; }
         public string Url { get; set; }
         public string Icon { get; set; }
         public bool IsOpen { get; set; }
@@ -23,7 +24,6 @@ namespace CardPlatform.Models.MenuMod
         /// <summary>
         /// 子菜单
         /// </summary>
-        
         public List<NavMenu> SubNavMenus = new List<NavMenu>();
     }
 

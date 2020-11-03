@@ -50,7 +50,6 @@ namespace CardPlatform.Common
                 return Convert.ToBase64String(randomNumber);
             }
         }
-
         /// <summary>
         /// 生成访问令牌
         /// </summary>

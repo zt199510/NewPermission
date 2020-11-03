@@ -1,20 +1,22 @@
-﻿using CardPlatform.Models.Enums;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using ZTDomain;
+using static ZTDomain.CommonMenu;
 
 namespace CardPlatform.Models
 {
     /// <summary>
     /// 菜单
     /// </summary>
-    public class Menu:Entity
+    public class Menus
     {
         /// <summary>
-        /// 主键ID
+        /// 菜单编号
         /// </summary>
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required(ErrorMessage = "请输入菜单编号")]

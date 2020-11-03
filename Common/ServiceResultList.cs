@@ -7,6 +7,6 @@ namespace CardPlatform.Common
 {
     public class ServiceResultList<T>:ServiceResult
     {
-        public T data { get; set; }
+        public T Data { get; set; }
     }
 }

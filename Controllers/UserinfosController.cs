@@ -2,22 +2,13 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using CardPlatform.Common;
-using CardPlatform.Models;
-using CardPlatform.Models.MenuMod;
-using CardPlatform.MyDBModel;
-using CardPlatform.ServiceEnd;
-using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
+using ZTDomain.Model;
 
 
 namespace CardPlatform.Controllers
@@ -30,15 +21,15 @@ namespace CardPlatform.Controllers
    
         private readonly ILogger<UserinfosController> _logger;
         private readonly CommonEven _CommonEven;
-        private readonly MyDbContext _UserDb;
-        private readonly NavMenuService _Navservice;
+  
+     
 
-        public UserinfosController(ILogger<UserinfosController> logger,CommonEven commonEven, MyDbContext UserDb, NavMenuService Navservice)
+        public UserinfosController(ILogger<UserinfosController> logger,CommonEven commonEven)
         {
             _logger = logger;
             _CommonEven = commonEven;
-            _UserDb = UserDb;
-            _Navservice = Navservice;
+      
+          
         }
 
         [HttpGet]
@@ -47,37 +38,62 @@ namespace CardPlatform.Controllers
         [Authorize]
         public  IActionResult Get()
         {
-            _Navservice.InitOrUpdate();
-            var result = new ServiceResultList<List<NavMenu>>();
+            var result = new ServiceResult();
+            //result.IsFailed();
+            //var token = new JwtSecurityToken(HttpContext.GetTokenAsync("Bearer", "access_token").Result);
+            //string email = token.Claims.FirstOrDefault(t => t.Type == "email").Value;
+            //SysUser user = _UserDb.SysUser.Where(o => o.UserEmail.Equals(email)).FirstOrDefault();
+            //if (user == null) return Ok(result);
+
+            //user.sysRoles = (from sur in _UserDb.SysUrRelated
+            //                 join sr in _UserDb.SysRole
+            //                 on sur.RoleId equals sr.RoleId
+            //                 where sur.UserId.Equals(user.UserId)
+            //                 select new SysRole
+            //                 {
+            //                     RoleId = sr.RoleId,
+            //                     RoleName = sr.RoleName,
+            //                     CreateUserId = sr.CreateUserId,
+            //                     DeleteSign = sr.DeleteSign,
+            //                     CreateTime = sr.CreateTime,
+            //                     DeleteTime = sr.DeleteTime,
+            //                     EditTime = sr.EditTime,
+            //                     Note = sr.Note
+            //                 }
+            //                   ).ToList();
+
+
+       
             result.IsSuccess();
-            result.data=(List<NavMenu>) _Navservice.GetNavMenus();
-            return new JsonResult(result);
+         
+            return Ok(result);
         }
         [HttpPost]
         [Route("GetMenuItem")]
         [Authorize]
-        public async Task<IActionResult> Index(MenuIndexQuery query)
+        public async Task<IActionResult> SelectMenuItem(MenuIndexQuery query)
         {
-            var menus = _UserDb.Menus.AsNoTracking();
-            if (!string.IsNullOrEmpty(query.QName))
-            {
-                menus = menus.Where(s => s.Name.Contains(query.QName.Trim()));
-            }
-            if (!string.IsNullOrEmpty(query.QId))
-            {
-                menus = menus.Where(s => s.Code==query.QId);
-            }
-            if (query.QParentId!=null)
-            {
-                menus = menus.Where(s => s.ParentId == query.QParentId);
-            }
-            if (query.QMenuType!=-1)
-            {
-                menus = menus.Where(s => s.MenuType == (MenuTypes)query.QMenuType);
-            }
-               
-            return Ok(new  { Menus = await menus.ToListAsync(), Query = query });
-          
+            //var menus = _UserDb.Menus.AsNoTracking();
+            //if (!string.IsNullOrEmpty(query.QName))
+            //{
+            //    menus = menus.Where(s => s.Name.Contains(query.QName.Trim()));
+            //}
+            //if (!string.IsNullOrEmpty(query.QId))
+            //{
+            //    menus = menus.Where(s => s.Code==query.QId);
+            //}
+            //if (query.QParentId!=null)
+            //{
+            //    menus = menus.Where(s => s.ParentId == query.QParentId);
+            //}
+            //if (query.QMenuType!=-1)
+            //{
+            //    menus = menus.Where(s => s.Type == query.QMenuType);
+            //}
+
+            //return Ok(new  { Menus = await menus.ToListAsync(), Query = query });
+            return Ok(false);
+
         }
 
 
