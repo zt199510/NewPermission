@@ -1,6 +1,5 @@
 ﻿using CardPlatform.Common;
-
-
+using CardPlatform.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ZtApplication.MesnuAPP;
 using ZTDomain;
 
 namespace CardPlatform.Controllers
@@ -19,11 +19,28 @@ namespace CardPlatform.Controllers
     [Authorize]
     public class MenuController : ControllerBase
     {
-      
 
-        public MenuController()
+        private readonly IMenuAppService _menuAppService;
+        public MenuController(IMenuAppService menuAppService)
         {
-      
+            _menuAppService = menuAppService;
+        }
+
+        /// <summary>
+        /// 获取功能树JSON数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetMenuTree")]
+        public IActionResult GetMenuTreeData()
+        {
+            var menus = _menuAppService.GetAllList();
+            //List<TreeModel> treeModels = new List<TreeModel>();
+            //foreach (var menu in menus)
+            //{
+            //    treeModels.Add(new TreeModel() { Id = menu.Id.ToString(), Text = menu.Name, Parent = menu.ParentId == Guid.Empty ? "#" : menu.ParentId.ToString(),Url=menu.Url });
+            //}
+            return Ok(menus);
         }
 
         /// <summary>
@@ -132,7 +149,7 @@ namespace CardPlatform.Controllers
         //            Result.IsSuccess("删除成功");
         //    }
         //    return Ok(Result);
-                
+
         //}
     }
 

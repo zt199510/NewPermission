@@ -22,8 +22,6 @@ namespace CardPlatform.Controllers
         private readonly ILogger<UserinfosController> _logger;
         private readonly CommonEven _CommonEven;
   
-     
-
         public UserinfosController(ILogger<UserinfosController> logger,CommonEven commonEven)
         {
             _logger = logger;

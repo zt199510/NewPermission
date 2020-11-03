@@ -46,7 +46,7 @@ namespace CardPlatform.Controllers
         {
             var result = new ServiceResult();
 
-            var loginModel = _userAppService.CheckUser(user.UserName, user.Password);
+            var loginModel = await _userAppService.CheckUser(user.UserName, user.Password);
             if (loginModel == null)
             {
                 result.IsFailed("账号或密码错误");

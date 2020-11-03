@@ -17,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Filters;
 using ZtApplication;
+using ZtApplication.MesnuAPP;
 using ZTDomain;
 using ZTDomain.IRepositories;
 using ZTDomain.Model;
@@ -56,7 +57,8 @@ namespace CardPlatform
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAppService, UserAppService>();
-
+            services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IMenuAppService, MenuAppService>();
             services.AddScoped<CommonEven>();
 
             services.AddSwagger();
