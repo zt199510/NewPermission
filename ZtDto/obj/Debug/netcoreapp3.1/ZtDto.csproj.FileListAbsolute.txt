@@ -1,0 +1,9 @@
+E:\WPFDemo\identity\ZtDto\bin\Debug\netcoreapp3.1\ZtDto.deps.json
+E:\WPFDemo\identity\ZtDto\bin\Debug\netcoreapp3.1\ZtDto.dll
+E:\WPFDemo\identity\ZtDto\bin\Debug\netcoreapp3.1\ZtDto.pdb
+E:\WPFDemo\identity\ZtDto\obj\Debug\netcoreapp3.1\ZtDto.csprojAssemblyReference.cache
+E:\WPFDemo\identity\ZtDto\obj\Debug\netcoreapp3.1\ZtDto.csproj.CoreCompileInputs.cache
+E:\WPFDemo\identity\ZtDto\obj\Debug\netcoreapp3.1\ZtDto.AssemblyInfoInputs.cache
+E:\WPFDemo\identity\ZtDto\obj\Debug\netcoreapp3.1\ZtDto.AssemblyInfo.cs
+E:\WPFDemo\identity\ZtDto\obj\Debug\netcoreapp3.1\ZtDto.dll
+E:\WPFDemo\identity\ZtDto\obj\Debug\netcoreapp3.1\ZtDto.pdb

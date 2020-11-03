@@ -1,0 +1,15 @@
+E:\WPFDemo\identity\Entityframeworkcore\bin\Debug\netcoreapp3.1\Entityframeworkcore.deps.json
+E:\WPFDemo\identity\Entityframeworkcore\bin\Debug\netcoreapp3.1\Entityframeworkcore.dll
+E:\WPFDemo\identity\Entityframeworkcore\obj\Debug\netcoreapp3.1\Entityframeworkcore.csprojAssemblyReference.cache
+E:\WPFDemo\identity\Entityframeworkcore\obj\Debug\netcoreapp3.1\Entityframeworkcore.AssemblyInfoInputs.cache
+E:\WPFDemo\identity\Entityframeworkcore\obj\Debug\netcoreapp3.1\Entityframeworkcore.AssemblyInfo.cs
+E:\WPFDemo\identity\Entityframeworkcore\bin\Debug\netcoreapp3.1\Entityframeworkcore.pdb
+E:\WPFDemo\identity\Entityframeworkcore\bin\Debug\netcoreapp3.1\ZTDomain.dll
+E:\WPFDemo\identity\Entityframeworkcore\bin\Debug\netcoreapp3.1\ZTDomain.pdb
+E:\WPFDemo\identity\Entityframeworkcore\obj\Debug\netcoreapp3.1\Entityframeworkcore.csproj.CopyComplete
+E:\WPFDemo\identity\Entityframeworkcore\obj\Debug\netcoreapp3.1\Entityframeworkcore.dll
+E:\WPFDemo\identity\Entityframeworkcore\obj\Debug\netcoreapp3.1\Entityframeworkcore.pdb
+E:\WPFDemo\identity\Entityframeworkcore\bin\Debug\netcoreapp3.1\Entityframeworkcore.runtimeconfig.json
+E:\WPFDemo\identity\Entityframeworkcore\bin\Debug\netcoreapp3.1\Entityframeworkcore.runtimeconfig.dev.json
+E:\WPFDemo\identity\Entityframeworkcore\obj\Debug\netcoreapp3.1\Entityframeworkcore.genruntimeconfig.cache
+E:\WPFDemo\identity\Entityframeworkcore\obj\Debug\netcoreapp3.1\Entityframeworkcore.csproj.CoreCompileInputs.cache

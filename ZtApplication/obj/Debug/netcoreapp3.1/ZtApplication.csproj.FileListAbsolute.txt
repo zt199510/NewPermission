@@ -1,0 +1,12 @@
+E:\WPFDemo\identity\ZtApplication\bin\Debug\netcoreapp3.1\ZtApplication.deps.json
+E:\WPFDemo\identity\ZtApplication\bin\Debug\netcoreapp3.1\ZtApplication.dll
+E:\WPFDemo\identity\ZtApplication\bin\Debug\netcoreapp3.1\ZtApplication.pdb
+E:\WPFDemo\identity\ZtApplication\bin\Debug\netcoreapp3.1\ZTDomain.dll
+E:\WPFDemo\identity\ZtApplication\bin\Debug\netcoreapp3.1\ZTDomain.pdb
+E:\WPFDemo\identity\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.csprojAssemblyReference.cache
+E:\WPFDemo\identity\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.AssemblyInfoInputs.cache
+E:\WPFDemo\identity\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.AssemblyInfo.cs
+E:\WPFDemo\identity\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.csproj.CopyComplete
+E:\WPFDemo\identity\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.dll
+E:\WPFDemo\identity\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.pdb
+E:\WPFDemo\identity\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.csproj.CoreCompileInputs.cache
