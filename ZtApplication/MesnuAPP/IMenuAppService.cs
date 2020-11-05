@@ -12,7 +12,7 @@ namespace ZtApplication.MesnuAPP
         /// 获取功能列表
         /// </summary>
         /// <returns></returns>
-        List<Menu> GetAllList();
+        List<MenuDto> GetAllList();
 
         /// <summary>
         /// 根据父级Id获取功能列表

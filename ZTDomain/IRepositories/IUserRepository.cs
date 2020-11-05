@@ -19,5 +19,14 @@ namespace ZTDomain.IRepositories
         /// <param name="password">密码</param>
         /// <returns>存在返回用户实体，否则返回NULL</returns>
         public  Task<User>  CheckUser(string userName, string password);
+        /// <summary>
+        /// 添加用户
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public  Task<bool> AddUser(User user);
+
+        Task<User> GetRefreshToken(string id);
+        public Task<bool> Save(User user);
     }
 }

@@ -69,7 +69,7 @@ namespace CardPlatform.Controllers
         [HttpPost]
         [Route("GetMenuItem")]
         [Authorize]
-        public async Task<IActionResult> SelectMenuItem(MenuIndexQuery query)
+        public async Task<IActionResult> SelectMenuItem(string query)
         {
             //var menus = _UserDb.Menus.AsNoTracking();
             //if (!string.IsNullOrEmpty(query.QName))

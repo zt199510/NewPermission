@@ -7,3 +7,12 @@ E:\WPFDemo\identity\ZTDomain\obj\Debug\netcoreapp3.1\ZTDomain.AssemblyInfo.cs
 E:\WPFDemo\identity\ZTDomain\obj\Debug\netcoreapp3.1\ZTDomain.dll
 E:\WPFDemo\identity\ZTDomain\obj\Debug\netcoreapp3.1\ZTDomain.pdb
 E:\WPFDemo\identity\ZTDomain\obj\Debug\netcoreapp3.1\ZTDomain.csprojAssemblyReference.cache
+E:\WPFDemo\identity\DDDTest\ZTDomain\bin\Debug\netcoreapp3.1\ZTDomain.deps.json
+E:\WPFDemo\identity\DDDTest\ZTDomain\bin\Debug\netcoreapp3.1\ZTDomain.dll
+E:\WPFDemo\identity\DDDTest\ZTDomain\bin\Debug\netcoreapp3.1\ZTDomain.pdb
+E:\WPFDemo\identity\DDDTest\ZTDomain\obj\Debug\netcoreapp3.1\ZTDomain.csprojAssemblyReference.cache
+E:\WPFDemo\identity\DDDTest\ZTDomain\obj\Debug\netcoreapp3.1\ZTDomain.csproj.CoreCompileInputs.cache
+E:\WPFDemo\identity\DDDTest\ZTDomain\obj\Debug\netcoreapp3.1\ZTDomain.AssemblyInfoInputs.cache
+E:\WPFDemo\identity\DDDTest\ZTDomain\obj\Debug\netcoreapp3.1\ZTDomain.AssemblyInfo.cs
+E:\WPFDemo\identity\DDDTest\ZTDomain\obj\Debug\netcoreapp3.1\ZTDomain.dll
+E:\WPFDemo\identity\DDDTest\ZTDomain\obj\Debug\netcoreapp3.1\ZTDomain.pdb

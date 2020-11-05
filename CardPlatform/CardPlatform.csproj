@@ -26,5 +26,9 @@
     <ProjectReference Include="..\ZtApplication\ZtApplication.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\MenuMod\" />
+  </ItemGroup>
+
 
 </Project>

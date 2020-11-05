@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,12 @@ namespace ZtApplication.MesnuAPP
     {
         private readonly IMenuRepository _menuRepository;
         private readonly IUserRepository _userRepository;
-    
-        public MenuAppService(IMenuRepository menuRepository, IUserRepository userRepository)
+        private readonly IMapper _mapper;
+        public MenuAppService(IMenuRepository menuRepository, IUserRepository userRepository, IMapper mapper)
         {
             _menuRepository = menuRepository;
             _userRepository = userRepository;
-       
+            _mapper = mapper;
 
         }
         public void Delete(Guid id)
@@ -36,11 +37,11 @@ namespace ZtApplication.MesnuAPP
             throw new NotImplementedException();
         }
 
-        public List<Menu> GetAllList()
+        public List<MenuDto> GetAllList()
         {
-            var menu = _menuRepository.GetAllList().OrderBy(it => it.SerialNumber);
+            var menus = _menuRepository.GetAllList().OrderBy(it => it.SerialNumber);
             //使用AutoMapper进行实体转换
-            return menu.ToList() ;
+            return _mapper.Map<List<MenuDto>>(menus);
         }
 
         public List<MenuDto> GetMenusByParent(Guid parentId, int startPage, int pageSize, out int rowCount)

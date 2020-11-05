@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CardPlatform.Models
+namespace ZTDomain.Models
 {
     public class UserRefreshToken
     {

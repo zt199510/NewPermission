@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ZTDomain.IRepositories
 {
@@ -58,7 +59,7 @@ namespace ZTDomain.IRepositories
         /// </summary>
         /// <param name="entity">实体</param>
         /// <returns></returns>
-        TEntity Insert(TEntity entity);
+       Task<TEntity> Insert(TEntity entity);
 
         /// <summary>
         /// 更新实体
@@ -70,7 +71,7 @@ namespace ZTDomain.IRepositories
         /// 新增或更新实体
         /// </summary>
         /// <param name="entity">实体</param>
-        TEntity InsertOrUpdate(TEntity entity);
+        Task<TEntity> InsertOrUpdate(TEntity entity);
 
         /// <summary>
         /// 删除实体

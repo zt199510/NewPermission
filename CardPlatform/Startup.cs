@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using CardPlatform.Common;
 using Entityframeworkcore;
 using Entityframeworkcore.Repositories;
@@ -60,7 +61,7 @@ namespace CardPlatform
             services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<IMenuAppService, MenuAppService>();
             services.AddScoped<CommonEven>();
-
+            services.AddAutoMapper(typeof(FonourMapper).Assembly);
             services.AddSwagger();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

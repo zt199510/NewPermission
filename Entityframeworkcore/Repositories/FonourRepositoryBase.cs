@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 using ZTDomain;
 using ZTDomain.IRepositories;
 
@@ -83,9 +84,9 @@ namespace Entityframeworkcore.Repositories
         /// </summary>
         /// <param name="entity">实体</param>
         /// <returns></returns>
-        public TEntity Insert(TEntity entity)
+        public async Task<TEntity> Insert(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Add(entity);
+            await _dbContext.Set<TEntity>().AddAsync(entity);
             return entity;
         }
 
@@ -104,11 +105,11 @@ namespace Entityframeworkcore.Repositories
         /// 新增或更新实体
         /// </summary>
         /// <param name="entity">实体</param>
-        public TEntity InsertOrUpdate(TEntity entity)
+        public async Task<TEntity> InsertOrUpdate(TEntity entity)
         {
             if (Get(entity.Id) != null)
                 return Update(entity);
-            return Insert(entity);
+            return await Insert(entity);
         }
 
         /// <summary>

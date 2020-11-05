@@ -29,5 +29,25 @@ namespace Entityframeworkcore.Repositories
         {
             return await _dbContext.Set<User>().FirstOrDefaultAsync(it => it.UserName == userName && it.Password == password);
         }
+
+        public async Task<User> GetRefreshToken(string id)
+        {
+
+            return await _dbContext.Set<User>().Include(c => c.UserRefreshTokens).FirstOrDefaultAsync(c => c.UserName == id);
+        }
+
+
+        public async Task<bool> AddUser(User user)
+        {
+             _dbContext.Set<User>().Add(user);
+    
+            return await _dbContext.SaveChangesAsync()>0?true:false;
+        }
+
+        public async Task<bool> Save(User user)
+        {
+            Update(user);
+            return await _dbContext.SaveChangesAsync() > 0 ? true : false;
+        }
     }
 }
