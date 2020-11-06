@@ -77,13 +77,13 @@ namespace ZTDomain.IRepositories
         /// 删除实体
         /// </summary>
         /// <param name="entity">要删除的实体</param>
-        bool Delete(TEntity entity);
+        bool Delete(TEntity entity, bool autoSave = true);
 
         /// <summary>
         /// 删除实体
         /// </summary>
         /// <param name="id">实体主键</param>
-        bool Delete(TPrimaryKey id);
+        bool Delete(TPrimaryKey id, bool autoSave = true);
 
         /// <summary>
         /// 根据条件删除实体

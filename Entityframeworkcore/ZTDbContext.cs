@@ -38,6 +38,7 @@ namespace Entityframeworkcore
             modelBuilder.Entity<RoleMenu>()
          .HasKey(rm => new { rm.RoleId, rm.MenuId });
 
+            modelBuilder.HasPostgresExtension("uuid-ossp");
         }
 
 

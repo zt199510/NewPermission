@@ -16,9 +16,9 @@ E:\WPFDemo\identity\DDDTest\ZtApplication\bin\Debug\netcoreapp3.1\ZtApplication.
 E:\WPFDemo\identity\DDDTest\ZtApplication\bin\Debug\netcoreapp3.1\ZTDomain.dll
 E:\WPFDemo\identity\DDDTest\ZtApplication\bin\Debug\netcoreapp3.1\ZTDomain.pdb
 E:\WPFDemo\identity\DDDTest\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.csprojAssemblyReference.cache
-E:\WPFDemo\identity\DDDTest\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.csproj.CoreCompileInputs.cache
 E:\WPFDemo\identity\DDDTest\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.AssemblyInfoInputs.cache
 E:\WPFDemo\identity\DDDTest\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.AssemblyInfo.cs
 E:\WPFDemo\identity\DDDTest\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.csproj.CopyComplete
 E:\WPFDemo\identity\DDDTest\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.dll
 E:\WPFDemo\identity\DDDTest\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.pdb
+E:\WPFDemo\identity\DDDTest\ZtApplication\obj\Debug\netcoreapp3.1\ZtApplication.csproj.CoreCompileInputs.cache

@@ -7,10 +7,15 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="IdentityModel" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ZTDomain\ZTDomain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="RoleApp\" />
   </ItemGroup>
 
 </Project>

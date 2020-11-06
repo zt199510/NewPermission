@@ -60,6 +60,9 @@ namespace CardPlatform
             services.AddScoped<IUserAppService, UserAppService>();
             services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<IMenuAppService, MenuAppService>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+
+            services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
             services.AddScoped<CommonEven>();
             services.AddAutoMapper(typeof(FonourMapper).Assembly);
             services.AddSwagger();

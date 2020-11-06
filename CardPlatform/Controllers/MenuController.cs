@@ -3,13 +3,14 @@ using CardPlatform.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using Microsoft.JSInterop.Infrastructure;
 using Microsoft.OpenApi.Validations.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ZtApplication.MesnuAPP;
+using ZtApplication.MesnuAPP.Dtos;
 using ZTDomain;
 
 namespace CardPlatform.Controllers
@@ -43,28 +44,26 @@ namespace CardPlatform.Controllers
             return Ok(menus);
         }
 
+
+
         /// <summary>
         /// 新建页面
         /// </summary>
         /// <param name="menu"></param>
         ///// <returns></returns>
-        //[HttpPost]
-        //[Route("Create")]
-        //public async Task<IActionResult> Create([Bind("Code,Name,ParentId,IndexCode,Url,MenuType,Icon,Remarks")] Menu menu)
-        //{
-        //    menu.ParentId= menu.ParentId == null ? Guid.Empty : menu.ParentId;
-        //    var Result = new ServiceResult();
-        //    Result.IsFailed("账号已经存在");
-        //    var Isuse = await _UserDb.Menus.FirstOrDefaultAsync(w => w.Code == menu.Code);
-        //    if (Isuse == null)
-        //    {
-        //        _UserDb.Add(menu);
-        //        await _UserDb.SaveChangesAsync();
-        //        Result.IsSuccess("注册成功");
-        //        return Ok(Result);
-        //    }
-        //    return Ok(Result);
-        //}
+        [HttpPost]
+        [Route("Create")]
+        public  IActionResult Edit(MenuDto dto)
+        {
+            var Res = new ServiceResult();
+            if (_menuAppService.InsertOrUpdate(dto))
+                Res.IsSuccess("成功");
+            else
+                Res.IsFailed("失败");
+
+            return Ok(Res);
+        }
+
 
 
         /// <summary>
@@ -92,65 +91,26 @@ namespace CardPlatform.Controllers
         //    Result.IsSuccess();
         //    Result.data = menu;
         //    return Ok(Result);
-
-
         //}
 
+        [HttpPost]
+        [Route("Delete")]
+        public  IActionResult Delete(Guid id)
+        {
+            var Res = new ServiceResult();
+            try
+            {
+                Res.IsSuccess();
+                _menuAppService.Delete(id);
+                return Ok(Res);
+            }
+            catch (Exception ex)
+            {
+                Res.IsFailed();
+                return Ok(Res);
+            }
 
-        /// <summary>
-        /// 编辑保存
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="menu"></param>
-        /// <returns></returns>
-        //[HttpPost]
-        //[Route("Edit")]
-        //public async Task<IActionResult> Edit(Guid id, [Bind("Code,Name,ParentId,IndexCode,Url,MenuType,Icon,Remarks")] Menu menu)
-        //{
-        //    var Result = new ServiceResult();
-        //    Result.IsFailed("失败");
-
-        //    if (id == Guid.Empty||id==null)
-        //    {
-        //        return Ok(Result);
-        //    }
-        //    try
-        //    {
-        //        menu.Id = id;
-        //        _UserDb.Update(menu);
-        //        await _UserDb.SaveChangesAsync();
-        //        Result.IsSuccess("成功");
-        //        return Ok(Result);
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        return Ok(Result); 
-        //    }
-
-
-        //}
-
-        //[HttpPost]
-        //[Route("Delete")]
-        //public async Task<IActionResult> Delete(Guid id)
-        //{
-        //    var Result = new ServiceResultList<Menu>();
-        //    Result.IsFailed("没有该数据信息");
-        //    if (id == null)
-        //    {
-        //        return Ok(Result);
-        //    }
-        //    var Isuse = await _UserDb.Menus.FirstOrDefaultAsync(w => w.Id == id);
-        //    if (Isuse != null)
-        //    {
-        //         _UserDb.Menus.Remove(Isuse);
-        //       int sum= await _UserDb.SaveChangesAsync();
-        //        if (sum > 0)
-        //            Result.IsSuccess("删除成功");
-        //    }
-        //    return Ok(Result);
-
-        //}
+        }
     }
 
 }

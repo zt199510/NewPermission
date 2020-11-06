@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using ZTDomain.Model;
+using ZTDomain.Models;
 
 namespace ZTDomain.IRepositories
 {/// <summary>
@@ -25,8 +26,10 @@ namespace ZTDomain.IRepositories
         /// <param name="user"></param>
         /// <returns></returns>
         public  Task<bool> AddUser(User user);
-
         Task<User> GetRefreshToken(string id);
         public Task<bool> Save(User user);
+
+        public User GetWithRoles(Guid id);
+
     }
 }

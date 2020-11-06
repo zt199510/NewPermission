@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HtPsES0Cjgwn0D1rWB0of3Z0jUYkLRfErHOcUg76GmE5NcJco8vYoHh/77qQMDQgzi0CKWGukjnNX7uOALSS7A==",
+  "dgSpecHash": "X72SLvk5T8ahAgdER17qkSWo/1NnDjI0C7eBvOsVfixXeTupwMNANZ8erw5CEpyTqXXlk2b0/yFXq0k9UwMuaw==",
   "success": true,
   "projectFilePath": "E:\\WPFDemo\\identity\\DDDTest\\Entityframeworkcore\\Entityframeworkcore.csproj",
   "expectedPackageFiles": [
@@ -29,6 +29,8 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.8\\microsoft.extensions.logging.abstractions.3.1.8.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.options\\3.1.8\\microsoft.extensions.options.3.1.8.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.8\\microsoft.extensions.primitives.3.1.8.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\npgsql\\4.1.3.1\\npgsql.4.1.3.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\3.1.4\\npgsql.entityframeworkcore.postgresql.3.1.4.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.2\\sqlitepclraw.bundle_e_sqlite3.2.0.2.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\sqlitepclraw.core\\2.0.2\\sqlitepclraw.core.2.0.2.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.2\\sqlitepclraw.lib.e_sqlite3.2.0.2.nupkg.sha512",
@@ -37,6 +39,7 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.6.0\\system.runtime.compilerservices.unsafe.4.6.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512"
   ],
   "logs": []

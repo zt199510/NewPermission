@@ -55,6 +55,6 @@ namespace ZtApplication.MesnuAPP
         /// </summary>
         /// <param name="userId">用户ID</param>
         /// <returns></returns>
-        List<Menu> GetMenusByUser(Guid userId);
+        List<MenuDto> GetMenusByUser(Guid userId);
     }
 }

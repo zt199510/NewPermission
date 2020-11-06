@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using ZTDomain.IRepositories;
 using ZTDomain.Model;
+using ZTDomain.Models;
+using ZTDomain.ModelsExtended;
 
 namespace Entityframeworkcore.Repositories
 {
@@ -49,5 +51,24 @@ namespace Entityframeworkcore.Repositories
             Update(user);
             return await _dbContext.SaveChangesAsync() > 0 ? true : false;
         }
+        /// <summary>
+        /// 根据Id获取实体
+        /// </summary>
+        /// <param name="id">Id</param>
+        /// <returns></returns>
+        public User GetWithRoles(Guid id)
+        {
+            var user = _dbContext.Set<User>().FirstOrDefault(it => it.Id == id);
+            if (user != null)
+            {
+                List<UserRole> userRoles= _dbContext.Set<UserRole>().Where(it => it.UserId == id).ToList();
+                userRoles.ForEach((c)=> {
+                    user.Roles.Add(c.Role);
+                });
+               
+            }
+            return user;
+        }
+
     }
 }

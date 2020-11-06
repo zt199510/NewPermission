@@ -63,7 +63,7 @@ namespace CardPlatform.Controllers
             var token = _CommonEven.GenerateAccessToken(claims);
             //生成允许刷新JWT的Token
             var refreshToken = _CommonEven.GenerateRefreshToken();
-            loginModel.CreateRefreshToken(token, loginModel.UserName);
+            loginModel.CreateRefreshToken(refreshToken, loginModel.UserName);
             result.IsFailed("发生未知错误");
             if (!await _userAppService.Save(loginModel)) throw new System.Exception("Throw Exception");
 
@@ -104,7 +104,7 @@ namespace CardPlatform.Controllers
                 Res.IsFailed("用户名或者邮箱已经存在");
                 return Ok(Res);
             }
-            bool IsOK = await _userAppService.Add(new ZTDomain.Model.User() { EMail = model.Email, UserName = model.Name, Password = model.Password, DeptmentId = Guid.Empty });
+            bool IsOK = await _userAppService.Add(new User() { EMail = model.Email, UserName = model.Name, Password = model.Password, DeptmentId = Guid.Empty });
             if (IsOK)
                 Res.IsSuccess("注册成功");
             else
@@ -118,58 +118,32 @@ namespace CardPlatform.Controllers
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [HttpPost("RefreshToken")]
+        [HttpPost("refresh-token")]
+ 
         public async Task<IActionResult> RefreshToken([FromBody] Request request)
         {
-
+            var Res = new ServiceResultList<object>();
+            Res.IsFailed("无效的token");
             //将访问令牌解密 并且返回Claims实体
             var principal = _CommonEven.GetPrincipalFromAccessToken(request.AccessToken);
 
             if (principal is null)
-                return Ok(false);
+                return Ok(Res);
+          
             var id = principal.Claims.First(c => c.Type == JwtClaimTypes.Name)?.Value;
             if (string.IsNullOrEmpty(id))
-                return Ok(false);
-            if (await _userAppService.RefreshToken(id, request.RefreshToken))
-            {
-               
+                return Ok(Res);
+            Res.IsFailed("刷新Token 过期");
+            var refreshToken = _CommonEven.GenerateRefreshToken();
+            var claims = await _userAppService.RefreshToken(id, request.RefreshToken, refreshToken);
+            if (claims == null)
+                return Ok(Res);
 
-            }
-
-
-
-            //if (user is null || user.UserRefreshTokens?.Count() <= 0)
-            //    return Ok(false);
-
-            //if (!user.IsValidRefreshToken(request.RefreshToken))
-            //    return Ok(false);
-
-            //_UserDb.UserRefreshToken.Remove(user.UserRefreshTokens.First(d => d.Token == request.RefreshToken));
-
-            //var refreshToken = _CommonEven.GenerateRefreshToken();
-
-            //user.CreateRefreshToken(refreshToken, user.UserName);
-
-            //try
-            //{
-            //    await _UserDb.SaveChangesAsync();
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
-
-            //IEnumerable<Claim> claims = new Claim[]
-            //       {
-            //             new Claim(JwtClaimTypes.Email,user.Email),
-            //             new Claim(JwtClaimTypes.Name,user.UserName),
-            //             new Claim(JwtClaimTypes.Role,"admin"),
-            //       };
+           ;
             return Ok(new
             {
-                AccessToken = "123"
-                //AccessToken = _CommonEven.GenerateAccessToken(claims),
-                //RefreshToken = refreshToken
+                AccessToken = _CommonEven.GenerateAccessToken(claims as IEnumerable<Claim>),
+                RefreshToken = refreshToken
             });
         }
 

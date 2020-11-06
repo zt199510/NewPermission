@@ -116,7 +116,7 @@ namespace Entityframeworkcore.Repositories
         /// 删除实体
         /// </summary>
         /// <param name="entity">要删除的实体</param>
-        public void Delete(TEntity entity)
+        public void Delete(TEntity entity, bool autoSave = true)
         {
             _dbContext.Set<TEntity>().Remove(entity);
         }
@@ -154,15 +154,15 @@ namespace Entityframeworkcore.Repositories
             return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);
         }
 
-        bool IRepository<TEntity, TPrimaryKey>.Delete(TEntity entity)
+        bool IRepository<TEntity, TPrimaryKey>.Delete(TEntity entity, bool autoSave = true)
         {
-            return false;
+            _dbContext.Set<TEntity>().Remove(entity);
+            if (autoSave)
+                Save();
+            return true;
         }
 
-        bool IRepository<TEntity, TPrimaryKey>.Delete(TPrimaryKey id)
-        {
-            return false;
-        }
+   
 
         /// <summary>
         /// 根据条件删除实体
@@ -196,6 +196,11 @@ namespace Entityframeworkcore.Repositories
                 result = result.OrderBy(m => m.Id);
             rowCount = result.Count();
             return result.Skip((startPage - 1) * pageSize).Take(pageSize);
+        }
+
+        public bool Delete(TPrimaryKey id, bool autoSave = true)
+        {
+            throw new NotImplementedException();
         }
     }
 }

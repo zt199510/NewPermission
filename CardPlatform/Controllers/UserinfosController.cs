@@ -37,40 +37,15 @@ namespace CardPlatform.Controllers
         public  IActionResult Get()
         {
             var result = new ServiceResult();
-            //result.IsFailed();
-            //var token = new JwtSecurityToken(HttpContext.GetTokenAsync("Bearer", "access_token").Result);
-            //string email = token.Claims.FirstOrDefault(t => t.Type == "email").Value;
-            //SysUser user = _UserDb.SysUser.Where(o => o.UserEmail.Equals(email)).FirstOrDefault();
-            //if (user == null) return Ok(result);
 
-            //user.sysRoles = (from sur in _UserDb.SysUrRelated
-            //                 join sr in _UserDb.SysRole
-            //                 on sur.RoleId equals sr.RoleId
-            //                 where sur.UserId.Equals(user.UserId)
-            //                 select new SysRole
-            //                 {
-            //                     RoleId = sr.RoleId,
-            //                     RoleName = sr.RoleName,
-            //                     CreateUserId = sr.CreateUserId,
-            //                     DeleteSign = sr.DeleteSign,
-            //                     CreateTime = sr.CreateTime,
-            //                     DeleteTime = sr.DeleteTime,
-            //                     EditTime = sr.EditTime,
-            //                     Note = sr.Note
-            //                 }
-            //                   ).ToList();
-
-
-       
-            result.IsSuccess();
-         
             return Ok(result);
         }
         [HttpPost]
         [Route("GetMenuItem")]
         [Authorize]
-        public async Task<IActionResult> SelectMenuItem(string query)
+        public async Task<IActionResult> SelectMenuItem()
         {
+
             //var menus = _UserDb.Menus.AsNoTracking();
             //if (!string.IsNullOrEmpty(query.QName))
             //{

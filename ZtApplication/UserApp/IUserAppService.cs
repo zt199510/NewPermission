@@ -8,7 +8,7 @@ namespace ZtApplication
         public  Task<User> CheckUser(string userName, string password);
 
         Task<bool> Add(User user);
-        Task<bool> RefreshToken(string id, string RefreshToken);
+        Task<object> RefreshToken(string id, string RefreshToken, string refreshToken);
        Task<bool> Save(User user);
     }
 }

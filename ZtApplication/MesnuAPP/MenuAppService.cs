@@ -15,16 +15,18 @@ namespace ZtApplication.MesnuAPP
         private readonly IMenuRepository _menuRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public MenuAppService(IMenuRepository menuRepository, IUserRepository userRepository, IMapper mapper)
+        private readonly IRoleRepository _roleRepository;
+        public MenuAppService(IMenuRepository menuRepository, IUserRepository userRepository, IMapper mapper,IRoleRepository roleRepository)
         {
             _menuRepository = menuRepository;
             _userRepository = userRepository;
             _mapper = mapper;
+            _roleRepository = roleRepository;
 
         }
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            _menuRepository.Delete(id);
         }
 
         public void DeleteBatch(List<Guid> ids)
@@ -46,12 +48,27 @@ namespace ZtApplication.MesnuAPP
 
         public List<MenuDto> GetMenusByParent(Guid parentId, int startPage, int pageSize, out int rowCount)
         {
-            throw new NotImplementedException();
+            var menus = _menuRepository.LoadPageList(startPage, pageSize, out rowCount, it => it.ParentId == parentId, it => it.SerialNumber);
+            return _mapper.Map<List<MenuDto>>(menus);
         }
 
-        public List<Menu> GetMenusByUser(Guid userId)
+        public List<MenuDto> GetMenusByUser(Guid userId)
         {
-            throw new NotImplementedException();
+            List<MenuDto> result = new List<MenuDto>();
+            var allMenus = _menuRepository.GetAllList(it => it.Type == 0).OrderBy(it => it.SerialNumber);
+            if (userId == Guid.Empty) //超级管理员
+                return _mapper.Map<List<MenuDto>>(allMenus);
+            var user = _userRepository.GetWithRoles(userId);
+            if (user == null)
+                return result;
+            var userRoles = user.Roles;
+            List<Guid> menuIds = new List<Guid>();
+            foreach (var role in userRoles)
+            {
+                menuIds = menuIds.Union(_roleRepository.GetAllMenuListByRole(role.Id)).ToList();
+            }
+            allMenus = allMenus.Where(it => menuIds.Contains(it.Id)).OrderBy(it => it.SerialNumber);
+            return _mapper.Map<List<MenuDto>>(allMenus);
         }
 
         public bool InsertOrUpdate(MenuDto dto)
