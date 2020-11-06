@@ -31,12 +31,12 @@ namespace ZtApplication.MesnuAPP
 
         public void DeleteBatch(List<Guid> ids)
         {
-            throw new NotImplementedException();
+            _menuRepository.Delete(it => ids.Contains(it.Id));
         }
 
         public MenuDto Get(Guid id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<MenuDto>(_menuRepository.Get(id));
         }
 
         public List<MenuDto> GetAllList()
