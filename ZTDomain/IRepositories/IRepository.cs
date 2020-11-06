@@ -83,7 +83,7 @@ namespace ZTDomain.IRepositories
         /// 删除实体
         /// </summary>
         /// <param name="id">实体主键</param>
-        bool Delete(TPrimaryKey id, bool autoSave = true);
+        void Delete(TPrimaryKey id, bool autoSave = true);
 
         /// <summary>
         /// 根据条件删除实体

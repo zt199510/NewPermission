@@ -73,7 +73,8 @@ namespace ZtApplication.MesnuAPP
 
         public bool InsertOrUpdate(MenuDto dto)
         {
-            throw new NotImplementedException();
+            var menu = _menuRepository.InsertOrUpdate(_mapper.Map<Menu>(dto));
+            return menu == null ? false : true;
         }
     }
 }

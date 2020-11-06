@@ -198,9 +198,11 @@ namespace Entityframeworkcore.Repositories
             return result.Skip((startPage - 1) * pageSize).Take(pageSize);
         }
 
-        public bool Delete(TPrimaryKey id, bool autoSave = true)
+        public void Delete(TPrimaryKey id, bool autoSave = true)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<TEntity>().Remove(Get(id));
+            if (autoSave)
+                Save();
         }
     }
 }

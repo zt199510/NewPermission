@@ -36,11 +36,6 @@ namespace CardPlatform.Controllers
         public IActionResult GetMenuTreeData()
         {
             var menus = _menuAppService.GetAllList();
-            //List<TreeModel> treeModels = new List<TreeModel>();
-            //foreach (var menu in menus)
-            //{
-            //    treeModels.Add(new TreeModel() { Id = menu.Id.ToString(), Text = menu.Name, Parent = menu.ParentId == Guid.Empty ? "#" : menu.ParentId.ToString(),Url=menu.Url });
-            //}
             return Ok(menus);
         }
 
