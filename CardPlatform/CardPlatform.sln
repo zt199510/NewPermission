@@ -13,8 +13,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFCore", "EFCore", "{EBF6F6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entityframeworkcore", "..\Entityframeworkcore\Entityframeworkcore.csproj", "{8FDF2E2D-54A6-4F3D-A18E-13F83178DC8B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DTO", "DTO", "{9D9DAE0D-2718-43DC-A1F6-BCD480DC61BB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{EF3AFB97-0555-4029-9DEF-45EF0AA2BA5B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZtApplication", "..\ZtApplication\ZtApplication.csproj", "{8C2E8610-7A10-4E4D-82EE-57F56DC1891A}"

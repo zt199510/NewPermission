@@ -165,7 +165,12 @@ namespace CardPlatform
                 //         Icon = "fa fa-link"
                 //     }
                 //  );
-
+                //    var role = new Role
+                //    {
+                //        Code = "9527",
+                //        Remarks = "9527",
+                //        Name = "9527"
+                //    };
                 //var role = context.Roles.Add(rout);
                 //foreach (var item in context.Menus)
                 //{
@@ -177,23 +182,18 @@ namespace CardPlatform
                 //        RoleId= rout.Id
                 //    });
                 //}
-                var rout = new Role
-                {
-                    Code = "9527",
-                    Remarks = "9527",
-                    Name = "9527"
-                };
-            User user=    context.Users.Where(o => o.UserName.Equals("string")).FirstOrDefault();
-                foreach (var item in context.Roles)
-                {
-                    context.UserRoles.Add(new ZTDomain.ModelsExtended.UserRole { 
-                        Role=rout,
-                        RoleId=rout.Id,
-                        User= user,
-                        UserId= user.Id
 
-                    });
-                }
+                //User user=    context.Users.Where(o => o.UserName.Equals("string")).FirstOrDefault();
+                //    foreach (var item in context.Roles)
+                //    {
+                //        context.UserRoles.Add(new ZTDomain.ModelsExtended.UserRole { 
+                //            Role=role,
+                //            RoleId=role.Id,
+                //            User= user,
+                //            UserId= user.Id
+
+                //        });
+                //    }
 
                 context.SaveChanges();
 
