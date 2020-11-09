@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ZtApplication.Common;
 using ZTDomain.Model;
 
 
@@ -45,7 +46,7 @@ namespace CardPlatform.Controllers
         [Authorize]
         public async Task<IActionResult> SelectMenuItem()
         {
-
+                
             //var menus = _UserDb.Menus.AsNoTracking();
             //if (!string.IsNullOrEmpty(query.QName))
             //{

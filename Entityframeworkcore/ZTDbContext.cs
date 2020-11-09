@@ -34,6 +34,7 @@ namespace Entityframeworkcore
             //UserRole关联配置
             modelBuilder.Entity<UserRole>()
               .HasKey(ur => new { ur.UserId, ur.RoleId });
+
             //RoleMenu关联配置
             modelBuilder.Entity<RoleMenu>()
          .HasKey(rm => new { rm.RoleId, rm.MenuId });

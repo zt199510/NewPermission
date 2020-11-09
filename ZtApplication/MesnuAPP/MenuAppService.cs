@@ -51,7 +51,11 @@ namespace ZtApplication.MesnuAPP
             var menus = _menuRepository.LoadPageList(startPage, pageSize, out rowCount, it => it.ParentId == parentId, it => it.SerialNumber);
             return _mapper.Map<List<MenuDto>>(menus);
         }
-
+        /// <summary>
+        /// 根据权限获取菜单
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public List<MenuDto> GetMenusByUser(Guid userId)
         {
             List<MenuDto> result = new List<MenuDto>();
@@ -61,6 +65,7 @@ namespace ZtApplication.MesnuAPP
             var user = _userRepository.GetWithRoles(userId);
             if (user == null)
                 return result;
+
             var userRoles = user.Roles;
             List<Guid> menuIds = new List<Guid>();
             foreach (var role in userRoles)

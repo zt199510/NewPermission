@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using ZTDomain.IRepositories;
 using ZTDomain.Model;
 using ZTDomain.Models;
+using ZTDomain.ModelsExtended;
 
 namespace ZtApplication
 {
@@ -19,19 +20,22 @@ namespace ZtApplication
         //用户管理仓储接口
         private readonly IUserRepository _userReporitory;
         private readonly IUserRefreshTokenRepository _RefreshTokenRepository;
-
+        private readonly IMenuRepository _menuRepository;
         /// <summary>
         /// 构造函数 实现依赖注入
         /// </summary>
         /// <param name="userRepository">仓储对象</param>
-        public UserAppService(IUserRepository userRepository, IUserRefreshTokenRepository RefreshTokenRepository)
+        public UserAppService(IUserRepository userRepository, IUserRefreshTokenRepository RefreshTokenRepository, IMenuRepository menuRepository)
         {
             _userReporitory = userRepository;
             _RefreshTokenRepository = RefreshTokenRepository;
+            _menuRepository = menuRepository;
         }
 
         public async Task<bool> Add(User  user)
         {
+            var allMenus = _menuRepository.GetAllList(it => it.Type == 0).OrderBy(it => it.SerialNumber);
+
             return await _userReporitory.AddUser(user);
         }
 

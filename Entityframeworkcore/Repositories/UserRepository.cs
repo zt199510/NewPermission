@@ -61,11 +61,14 @@ namespace Entityframeworkcore.Repositories
             var user = _dbContext.Set<User>().FirstOrDefault(it => it.Id == id);
             if (user != null)
             {
+             
                 List<UserRole> userRoles= _dbContext.Set<UserRole>().Where(it => it.UserId == id).ToList();
+                List<Role> roles = new List<Role>();
                 userRoles.ForEach((c)=> {
-                    user.Roles.Add(c.Role);
+                    var role = _dbContext.Set<Role>().FirstOrDefault(it => it.Id == c.RoleId);
+                    roles.Add(role);
                 });
-               
+                user.Roles= roles;
             }
             return user;
         }

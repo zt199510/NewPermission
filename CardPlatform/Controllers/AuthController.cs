@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using ZtApplication;
+using ZtApplication.Common;
 using ZTDomain;
 using ZTDomain.Model;
 

@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Filters;
 using ZtApplication;
+using ZtApplication.Common;
 using ZtApplication.MesnuAPP;
 using ZTDomain;
 using ZTDomain.IRepositories;
@@ -95,7 +96,7 @@ namespace CardPlatform
             {
                 endpoints.MapControllers();
             });
-             InitIdentityServerDataBase(app);
+            InitIdentityServerDataBase(app);
         }
 
         private void InitIdentityServerDataBase(IApplicationBuilder app)
@@ -104,69 +105,101 @@ namespace CardPlatform
             {
                 var services = scope.ServiceProvider;
                 var context = services.GetService<ZTDbContext>();
-                if (context.Users.Any()) return;
-                Guid departmentId = Guid.NewGuid();
+                  if (context.Users.Any()) return;
+                //    Guid departmentId = Guid.NewGuid();
 
-                    context.Departments.Add(
-               new Department
-               {
-                   Id = departmentId,
-                   Name = "Fonour集团总部",
-                   ParentId = Guid.Empty
-               }
-            );
-                //增加一个超级管理员用户
-                context.Users.Add(
-                   new User
-                   {
-                       UserName = "admin",
-                       Password = "123456", //
-                       Name = "超级管理员",
-                       DeptmentId = departmentId
-                   }
-              );
+                //        context.Departments.Add(
+                //   new Department
+                //   {
+                //       Id = departmentId,
+                //       Name = "Fonour集团总部",
+                //       ParentId = Guid.Empty
+                //   }
+                //);
+                //    //增加一个超级管理员用户
+                //    context.Users.Add(
+                //       new User
+                //       {
+                //           UserName = "admin",
+                //           Password = "123456", //
+                //           Name = "超级管理员",
+                //           DeptmentId = departmentId
+                //       }
+                //  );
 
 
-                //增加四个基本功能菜单
-                context.Menus.AddRange(
-                 new Menu
-                 {
-                     Name = "组织机构管理",
-                     Code = "Department",
-                     SerialNumber = 0,
-                     ParentId = Guid.Empty,
-                     Icon = "fa fa-link"
-                 },
-                 new Menu
-                 {
-                     Name = "角色管理",
-                     Code = "Role",
-                     SerialNumber = 1,
-                     ParentId = Guid.Empty,
-                     Icon = "fa fa-link"
-                 },
-                 new Menu
-                 {
-                     Name = "用户管理",
-                     Code = "User",
-                     SerialNumber = 2,
-                     ParentId = Guid.Empty,
-                     Icon = "fa fa-link"
-                 },
-                 new Menu
-                 {
-                     Name = "功能管理",
-                     Code = "Department",
-                     SerialNumber = 3,
-                     ParentId = Guid.Empty,
-                     Icon = "fa fa-link"
-                 }
-              );
+
+
+                //    //增加四个基本功能菜单
+                //    context.Menus.AddRange(
+                //     new Menu
+                //     {
+                //         Name = "组织机构管理",
+                //         Code = "Department",
+                //         SerialNumber = 0,
+                //         ParentId = Guid.Empty,
+                //         Icon = "fa fa-link"
+                //     },
+                //     new Menu
+                //     {
+                //         Name = "角色管理",
+                //         Code = "Role",
+                //         SerialNumber = 1,
+                //         ParentId = Guid.Empty,
+                //         Icon = "fa fa-link"
+                //     },
+                //     new Menu
+                //     {
+                //         Name = "用户管理",
+                //         Code = "User",
+                //         SerialNumber = 2,
+                //         ParentId = Guid.Empty,
+                //         Icon = "fa fa-link"
+                //     },
+                //     new Menu
+                //     {
+                //         Name = "功能管理",
+                //         Code = "Department",
+                //         SerialNumber = 3,
+                //         ParentId = Guid.Empty,
+                //         Icon = "fa fa-link"
+                //     }
+                //  );
+
+                //var role = context.Roles.Add(rout);
+                //foreach (var item in context.Menus)
+                //{
+                //    context.RoleMenus.Add(new ZTDomain.ModelsExtended.RoleMenu
+                //    {
+                //        Menu = item,
+                //        MenuId = item.Id,
+                //        Role = rout,
+                //        RoleId= rout.Id
+                //    });
+                //}
+                var rout = new Role
+                {
+                    Code = "9527",
+                    Remarks = "9527",
+                    Name = "9527"
+                };
+            User user=    context.Users.Where(o => o.UserName.Equals("string")).FirstOrDefault();
+                foreach (var item in context.Roles)
+                {
+                    context.UserRoles.Add(new ZTDomain.ModelsExtended.UserRole { 
+                        Role=rout,
+                        RoleId=rout.Id,
+                        User= user,
+                        UserId= user.Id
+
+                    });
+                }
+
                 context.SaveChanges();
 
             }
         }
 
-    
+
     }
 }

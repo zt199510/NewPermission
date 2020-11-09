@@ -1,6 +1,8 @@
 ﻿using CardPlatform.Common;
 using CardPlatform.Model;
+using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.JSInterop.Infrastructure;
@@ -9,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ZtApplication.Common;
 using ZtApplication.MesnuAPP;
 using ZtApplication.MesnuAPP.Dtos;
 using ZTDomain;
@@ -20,11 +23,35 @@ namespace CardPlatform.Controllers
     [Authorize]
     public class MenuController : ControllerBase
     {
-
+        //  private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMenuAppService _menuAppService;
-        public MenuController(IMenuAppService menuAppService)
+        private readonly CommonEven _commonEven;
+
+        public MenuController(IMenuAppService menuAppService, CommonEven commonEven)
         {
             _menuAppService = menuAppService;
+            _commonEven = commonEven;
+            //   _httpContextAccessor = httpContextAccessor;
+        }
+        [HttpGet]
+        [Route("GetNavigation")]
+        public IActionResult GetNavigation()
+        {
+            var headers = HttpContext.Request.Headers["Authorization"].ToString();
+
+            var Res = new ServiceResultList<List<MenuDto>>();
+            Res.IsFailed();
+            if (string.IsNullOrEmpty(headers)) return Ok(Res);
+            headers = headers.Replace("Bearer ", "");
+            var principal = _commonEven.GetPrincipalFromAccessToken(headers);
+            var id = principal.Claims.First(c => c.Type == JwtClaimTypes.Id)?.Value;
+
+            Res.Data = _menuAppService.GetMenusByUser(Guid.Parse(id));
+
+
+            return Ok(Res);
+
+
         }
 
         /// <summary>
@@ -35,8 +62,20 @@ namespace CardPlatform.Controllers
         [Route("GetMenuTree")]
         public IActionResult GetMenuTreeData()
         {
-            var menus = _menuAppService.GetAllList();
-            return Ok(menus);
+            var Res = new ServiceResultList<List<MenuDto>>();
+            try
+            {
+                Res.IsSuccess();
+                Res.Data = _menuAppService.GetAllList();
+
+            }
+            catch (Exception)
+            {
+                Res.IsFailed();
+
+            }
+
+            return Ok(Res);
         }
 
 
@@ -48,7 +87,7 @@ namespace CardPlatform.Controllers
         ///// <returns></returns>
         [HttpPost]
         [Route("Create")]
-        public  IActionResult Edit(MenuDto dto)
+        public IActionResult Edit(MenuDto dto)
         {
             var Res = new ServiceResult();
             if (_menuAppService.InsertOrUpdate(dto))
@@ -59,38 +98,9 @@ namespace CardPlatform.Controllers
             return Ok(Res);
         }
 
-
-
-        /// <summary>
-        /// 详情页
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        //[HttpPost]
-        //[Route("Details")]
-        //public async Task<IActionResult> Details(Guid id)
-        //{
-        //    var Result = new ServiceResultList<Menu>();
-        //    Result.IsFailed("查询失败");
-        //    if (id == null)
-        //    {
-        //        return Ok(Result);
-        //    }
-
-        //    var menu = await _UserDb.Menus
-        //    .SingleOrDefaultAsync(m => m.Id == id);
-        //    if (menu == null)
-        //    {
-        //        return Ok(Result);
-        //    }
-        //    Result.IsSuccess();
-        //    Result.data = menu;
-        //    return Ok(Result);
-        //}
-
         [HttpPost]
         [Route("Delete")]
-        public  IActionResult Delete(Guid id)
+        public IActionResult Delete(Guid id)
         {
             var Res = new ServiceResult();
             try
