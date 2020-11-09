@@ -20,6 +20,7 @@ using Swashbuckle.AspNetCore.Filters;
 using ZtApplication;
 using ZtApplication.Common;
 using ZtApplication.MesnuAPP;
+using ZtApplication.RoleApp;
 using ZTDomain;
 using ZTDomain.IRepositories;
 using ZTDomain.Model;
@@ -62,7 +63,7 @@ namespace CardPlatform
             services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<IMenuAppService, MenuAppService>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-
+            services.AddScoped<IRoleAppService, RoleAppService>();
             services.AddScoped<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
             services.AddScoped<CommonEven>();
             services.AddAutoMapper(typeof(FonourMapper).Assembly);

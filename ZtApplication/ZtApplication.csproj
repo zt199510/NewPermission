@@ -15,8 +15,4 @@
     <ProjectReference Include="..\ZTDomain\ZTDomain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="RoleApp\" />
-  </ItemGroup>
-
 </Project>

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using ZtApplication.MesnuAPP.Dtos;
+using ZtApplication.RoleApp.Dtos;
 using ZTDomain.Model;
 
 namespace ZtApplication
@@ -18,6 +19,8 @@ namespace ZtApplication
           
             CreateMap<Menu, MenuDto>().ReverseMap();
             CreateMap<MenuDto, Menu>().ReverseMap();
+            CreateMap<Role, RoleDto>().ReverseMap();
+            CreateMap<RoleDto, Role>().ReverseMap();
         }
      
     }
