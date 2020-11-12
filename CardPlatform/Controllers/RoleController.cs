@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CardPlatform.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using ZtApplication.RoleApp;
 using ZtApplication.RoleApp.Dtos;
 
 namespace CardPlatform.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
+    [Authorize]
     public class RoleController : ControllerBase
     {
 
@@ -23,7 +28,9 @@ namespace CardPlatform.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public IActionResult Edit(RoleDto dto)
+        [HttpPost]
+        [Route("Edit")]
+        public IActionResult EditorCreate(RoleDto dto)
         {
             var Res = new ServiceResult();
             Res.IsFailed();
@@ -42,6 +49,8 @@ namespace CardPlatform.Controllers
             return Ok(Res);
         }
 
+        [HttpPost]
+        [Route("GetAllPageList")]
         public IActionResult GetAllPageList(int startPage, int pageSize)
         {
             int rowCount = 0;
@@ -52,6 +61,58 @@ namespace CardPlatform.Controllers
                 pageCount = Math.Ceiling(Convert.ToDecimal(rowCount) / pageSize),
                 rows = result,
             });
+        }
+
+        [HttpPost]
+       [Route("DeleteMuti")] 
+        public IActionResult DeleteMuti(string ids)
+        {
+            var Res = new ServiceResult();
+            try
+            {
+                Res.IsSuccess();
+                string[] idArray = ids.Split(',');
+                List<Guid> delIds = new List<Guid>();
+                foreach (string id in idArray)
+                {
+                    delIds.Add(Guid.Parse(id));
+                }
+                _service.DeleteBatch(delIds);
+                return Ok(Res);
+            }
+            catch (Exception ex)
+            {
+                Res.IsFailed();
+                return Ok(Res);
+            }
+        }
+
+        [HttpPost]
+        [Route("Delete")]
+        public IActionResult Delete(Guid Id)
+        {
+            var Res = new ServiceResult();
+            try
+            { Res.IsSuccess();
+                _service.Delete(Id);
+                return Ok(Res);
+            }
+            catch (Exception)
+            {
+                Res.IsFailed();
+                return Ok(Res);
+                
+            }
+        }
+        [HttpPost]
+        [Route("GetId")]
+        public IActionResult Get(Guid id)
+        {
+            var Res = new ServiceResultList<RoleDto>();
+            var dto = _service.Get(id);
+            Res.Data = dto;
+            return Ok(Res);
+            
         }
 
 

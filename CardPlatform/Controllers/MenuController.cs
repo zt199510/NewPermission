@@ -78,15 +78,13 @@ namespace CardPlatform.Controllers
             return Ok(Res);
         }
 
-
-
         /// <summary>
         /// 新建页面
         /// </summary>
         /// <param name="menu"></param>
         ///// <returns></returns>
         [HttpPost]
-        [Route("Create")]
+        [Route("Edit")]
         public IActionResult Edit(MenuDto dto)
         {
             var Res = new ServiceResult();
